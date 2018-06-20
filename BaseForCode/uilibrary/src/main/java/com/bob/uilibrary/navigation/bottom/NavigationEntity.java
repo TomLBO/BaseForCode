@@ -8,8 +8,6 @@ public class NavigationEntity {
 
     private int title;
 
-    private float titleSize;
-
     private int titleColorNormal;
 
     private int titleColorPress;
@@ -17,8 +15,6 @@ public class NavigationEntity {
     private int iconNormal;
 
     private int iconPress;
-
-    private float iconSize;
 
     public static NavigationEntity getInstance(int title, int titleColorNormal,
                                                int titleColorPress, int iconNormal, int iconPress) {
@@ -79,19 +75,4 @@ public class NavigationEntity {
         this.titleColorPress = titleColorPress;
     }
 
-    public float getTitleSize() {
-        return titleSize;
-    }
-
-    public void setTitleSize(float titleSize) {
-        this.titleSize = titleSize;
-    }
-
-    public float getIconSize() {
-        return iconSize;
-    }
-
-    public void setIconSize(float iconSize) {
-        this.iconSize = iconSize;
-    }
 }

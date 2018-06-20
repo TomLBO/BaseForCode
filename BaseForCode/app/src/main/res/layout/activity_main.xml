@@ -8,27 +8,33 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:src="@drawable/communications_selected"/>
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:padding="2dp"
+        android:src="@drawable/home_normal"
+        app:layout_constraintBottom_toTopOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginStart="8dp"
+        android:text="@string/navigation_home"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <com.bob.uilibrary.navigation.bottom.BottomNavigationView
+    <com.bob.uilibrary.navigation.bottom.BottomNavigationBar
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="46dp"
+        android:background="#FFDDDDDD"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:navigation_icon_size="30dp"
-        app:navigation_title_size="18dp"/>
+        app:navigation_icon_size="18dp"
+        app:navigation_icon_title_gap="2dp"
+        app:navigation_title_size="12sp"
+        />
 
 </android.support.constraint.ConstraintLayout>

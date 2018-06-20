@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="BottomNavigationView">
+    <declare-styleable name="BottomNavigationBar">
         <attr name="navigation_icon_size" format="dimension"/>
         <attr name="navigation_title_size" format="dimension"/>
+        <attr name="navigation_icon_title_gap" format="dimension"/>
     </declare-styleable>
 </resources>

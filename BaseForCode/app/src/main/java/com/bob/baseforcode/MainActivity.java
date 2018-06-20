@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.bob.core.ScreenInfo;
-import com.bob.uilibrary.navigation.bottom.BottomNavigationView;
+import com.bob.uilibrary.navigation.bottom.BottomNavigationBar;
 import com.bob.uilibrary.navigation.bottom.NavigationEntity;
 
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    BottomNavigationView mNavigationView;
+    BottomNavigationBar mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         mNavigationView.setItemList(list);
 
-        mNavigationView.setOnItemClickListener(new BottomNavigationView.OnItemClickListener() {
+        mNavigationView.setOnItemClickListener(new BottomNavigationBar.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Log.d(TAG, "onItemClick: " + position);

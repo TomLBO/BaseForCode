@@ -17,44 +17,47 @@ import java.util.List;
 /**
  * 底部导航栏
  */
-public class BottomNavigationView extends LinearLayout {
+public class BottomNavigationBar extends LinearLayout {
     private static final String TAG = "BottomNavigationView";
     private List<NavigationEntity> mItems;
     private List<BottomNavigationItemView> mItemViews;
     private OnItemClickListener mItemClickListener;
 
-    private float iconSize;
-    private float iconSizeDefault;
+    private int iconSize;
+    private int iconSizeDefault;
 
-    private float titleSize;
-    private float titleSizeDefault;
+    private int titleSize;
+    private int titleSizeDefault;
+
+    private int iconTitleGap;
 
 
-    public BottomNavigationView(Context context) {
+    public BottomNavigationBar(Context context) {
         this(context, null);
     }
 
-    public BottomNavigationView(Context context, @Nullable AttributeSet attrs) {
+    public BottomNavigationBar(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BottomNavigationView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public BottomNavigationBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
-    public BottomNavigationView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BottomNavigationBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         TypedArray ta = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.BottomNavigationView, defStyleAttr, defStyleRes);
+                attrs, R.styleable.BottomNavigationBar, defStyleAttr, defStyleRes);
         int length = ta.length();
         for (int i = 0; i < length; i++) {
             int attr = ta.getIndex(i);
-
-            if (attr == R.styleable.BottomNavigationView_navigation_title_size) {
+            if (attr == R.styleable.BottomNavigationBar_navigation_title_size) {
                 titleSize = ta.getDimensionPixelSize(i, -1);
-            } else if (attr == R.styleable.BottomNavigationView_navigation_icon_size) {
+            } else if (attr == R.styleable.BottomNavigationBar_navigation_icon_size) {
                 iconSize = ta.getDimensionPixelSize(i, -1);
+            } else if (attr == R.styleable.BottomNavigationBar_navigation_icon_title_gap) {
+                iconTitleGap = ta.getDimensionPixelSize(i, 10);
             }
         }
 
@@ -124,10 +127,9 @@ public class BottomNavigationView extends LinearLayout {
             final BottomNavigationItemView view = new BottomNavigationItemView(getContext());
             LayoutParams params = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
             view.setLayoutParams(params);
-
-            item.setTitleSize(titleSize);
-            item.setIconSize(iconSize);
-
+            view.setIconSize(iconSize);
+            view.setTitleSize(titleSize);
+            view.setIconTitleGap(iconTitleGap);
             view.setData(item);
             mItemViews.add(view);
         }

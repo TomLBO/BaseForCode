@@ -1,7 +1,6 @@
 package com.bob.uilibrary.navigation.bottom;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -18,13 +17,21 @@ import com.bob.uilibrary.utils.DensityUtil;
  */
 public class BottomNavigationItemView extends LinearLayout {
 
+    private static final int DEFAULT_ICON_SIZE_DP = 20;
+    private static final int DEFAULT_TITLE_SIZE_SP = 12;
+    private static final int DEFAULT_ICON_TITLE_GAP_DP = 2;
+    private static final int DEFAULT_PADDING_DP = 2;
+
     private ImageView mIvIcon;
     private TextView mTvTitle;
     private NavigationEntity mNavigation;
 
     private int mItemPadding;
-    private int mIconPadding;
-    private int mTitlePadding;
+
+    private int iconSize;
+    private int titleSize;
+    private int iconTitleGap;
+
 
     public BottomNavigationItemView(Context context) {
         this(context, null);
@@ -43,11 +50,12 @@ public class BottomNavigationItemView extends LinearLayout {
     private void init() {
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
-        mItemPadding = DensityUtil.dip2px(getContext(), 2);
+        mItemPadding = DensityUtil.dip2px(getContext(), DEFAULT_PADDING_DP);
         setPadding(mItemPadding, mItemPadding, mItemPadding, mItemPadding);
 
-        mIconPadding = DensityUtil.dip2px(getContext(), 1);
-        mTitlePadding = DensityUtil.dip2px(getContext(), 1);
+        iconSize = iconSize < 0 ? DensityUtil.dip2px(getContext(), DEFAULT_ICON_SIZE_DP) : iconSize;
+        titleSize = titleSize < 0 ? DensityUtil.sp2px(getContext(), DEFAULT_TITLE_SIZE_SP) : titleSize;
+        iconTitleGap = iconTitleGap < 0 ? DensityUtil.dip2px(getContext(), DEFAULT_ICON_TITLE_GAP_DP) : iconTitleGap;
     }
 
     private void addChild() {
@@ -65,24 +73,22 @@ public class BottomNavigationItemView extends LinearLayout {
 
     private ImageView getIconView() {
         ImageView iconView = new ImageView(getContext());
-        LayoutParams ivParams = new LayoutParams(LayoutParams.MATCH_PARENT, (int) mNavigation.getIconSize(), 1);
+        LayoutParams ivParams = new LayoutParams(iconSize, iconSize);
         iconView.setLayoutParams(ivParams);
-        iconView.setPadding(mIconPadding, mIconPadding, mIconPadding, mIconPadding);
         iconView.setImageDrawable(getResources().getDrawable(mNavigation.getIconNormal()));
-
         return iconView;
     }
 
     private TextView getTitleView() {
         TextView titleView = new TextView(getContext());
         LayoutParams tvParams = new LayoutParams(LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         titleView.setGravity(Gravity.CENTER);
+        tvParams.topMargin = iconTitleGap;
         titleView.setLayoutParams(tvParams);
-        titleView.setPadding(mTitlePadding, mTitlePadding, mTitlePadding, mTitlePadding);
         titleView.setTextColor(getResources().getColor(mNavigation.getTitleColorNormal()));
         titleView.setText(getResources().getText(mNavigation.getTitle()));
-        titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mNavigation.getTitleSize());
+        titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize);
         return titleView;
     }
 
@@ -105,5 +111,29 @@ public class BottomNavigationItemView extends LinearLayout {
                 .getDrawable(press ? mNavigation.getIconPress() : mNavigation.getIconNormal()));
         mTvTitle.setTextColor(getResources()
                 .getColor(press ? mNavigation.getTitleColorPress() : mNavigation.getTitleColorNormal()));
+    }
+
+    public int getIconSize() {
+        return iconSize;
+    }
+
+    public void setIconSize(int iconSize) {
+        this.iconSize = iconSize;
+    }
+
+    public int getTitleSize() {
+        return titleSize;
+    }
+
+    public void setTitleSize(int titleSize) {
+        this.titleSize = titleSize;
+    }
+
+    public int getIconTitleGap() {
+        return iconTitleGap;
+    }
+
+    public void setIconTitleGap(int iconTitleGap) {
+        this.iconTitleGap = iconTitleGap;
     }
 }
