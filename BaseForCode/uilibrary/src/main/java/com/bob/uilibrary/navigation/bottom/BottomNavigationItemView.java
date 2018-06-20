@@ -34,6 +34,9 @@ public class BottomNavigationItemView extends LinearLayout {
     private int titleSize;
     private int iconTitleGap;
 
+    private boolean isChecked;
+    private boolean mLastCheckStatus;
+
 
     public BottomNavigationItemView(Context context) {
         this(context, null);
@@ -105,14 +108,15 @@ public class BottomNavigationItemView extends LinearLayout {
         return mNavigation;
     }
 
-    public void setPress(boolean press) {
+    public void setCheck(boolean check) {
         if (mNavigation == null) {
             return;
         }
+        isChecked = check;
         mIvIcon.setImageDrawable(getResources()
-                .getDrawable(press ? mNavigation.getIconPress() : mNavigation.getIconNormal()));
+                .getDrawable(check ? mNavigation.getIconPress() : mNavigation.getIconNormal()));
         mTvTitle.setTextColor(getResources()
-                .getColor(press ? mNavigation.getTitleColorPress() : mNavigation.getTitleColorNormal()));
+                .getColor(check ? mNavigation.getTitleColorPress() : mNavigation.getTitleColorNormal()));
     }
 
     public int getIconSize() {
@@ -139,4 +143,38 @@ public class BottomNavigationItemView extends LinearLayout {
         this.iconTitleGap = iconTitleGap;
     }
 
+
+    public boolean pointInView(float localX, float localY, float slop) {
+        return localX >= -slop && localY >= -slop && localX < ((getRight() - getLeft()) + slop) &&
+                localY < ((getBottom() - getTop()) + slop);
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            mLastCheckStatus = isChecked;
+            setCheck(true);
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+            if (pointInView(x, y, 0)) {
+                performClick();
+            } else {
+                if (!mLastCheckStatus) {
+                    setCheck(false);
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
 }

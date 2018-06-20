@@ -5,12 +5,10 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.bob.uilibrary.R;
-import com.bob.uilibrary.utils.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +100,7 @@ public class BottomNavigationBar extends LinearLayout {
         }
         int len = mItemViews.size();
         for (int i = 0; i < len; i++) {
-            mItemViews.get(i).setPress(i == pos);
+            mItemViews.get(i).setCheck(i == pos);
         }
     }
 
@@ -136,6 +134,16 @@ public class BottomNavigationBar extends LinearLayout {
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
+
+    public void setChecked(int pos) {
+        if(pos > mItems.size()){
+            throw new RuntimeException("");
+        }
+        if (mItemClickListener != null) {
+            setItemPress(pos);
+            mItemClickListener.onItemClick(pos);
+        }
     }
 
 }
