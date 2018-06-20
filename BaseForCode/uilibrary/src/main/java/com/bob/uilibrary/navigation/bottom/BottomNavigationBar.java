@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -24,10 +25,8 @@ public class BottomNavigationBar extends LinearLayout {
     private OnItemClickListener mItemClickListener;
 
     private int iconSize;
-    private int iconSizeDefault;
 
     private int titleSize;
-    private int titleSizeDefault;
 
     private int iconTitleGap;
 
@@ -65,12 +64,6 @@ public class BottomNavigationBar extends LinearLayout {
     }
 
     private void init() {
-        iconSizeDefault = DensityUtil.dip2px(getContext(), 20);
-        iconSize = iconSize < 0 ? iconSizeDefault : iconSize;
-
-        titleSizeDefault = DensityUtil.dip2px(getContext(), 10);
-        titleSize = titleSize < 0 ? titleSizeDefault : titleSize;
-
         setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER);
 

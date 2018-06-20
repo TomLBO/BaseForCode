@@ -2,9 +2,11 @@ package com.bob.uilibrary.navigation.bottom;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.annotation.Px;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -117,7 +119,7 @@ public class BottomNavigationItemView extends LinearLayout {
         return iconSize;
     }
 
-    public void setIconSize(int iconSize) {
+    public void setIconSize(@Px int iconSize) {
         this.iconSize = iconSize;
     }
 
@@ -125,7 +127,7 @@ public class BottomNavigationItemView extends LinearLayout {
         return titleSize;
     }
 
-    public void setTitleSize(int titleSize) {
+    public void setTitleSize(@Px int titleSize) {
         this.titleSize = titleSize;
     }
 
@@ -133,7 +135,8 @@ public class BottomNavigationItemView extends LinearLayout {
         return iconTitleGap;
     }
 
-    public void setIconTitleGap(int iconTitleGap) {
+    public void setIconTitleGap(@Px int iconTitleGap) {
         this.iconTitleGap = iconTitleGap;
     }
+
 }
