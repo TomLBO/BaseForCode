@@ -28,6 +28,8 @@ public class BottomNavigationBar extends LinearLayout {
 
     private int iconTitleGap;
 
+    private int mCurrentPos;
+
 
     public BottomNavigationBar(Context context) {
         this(context, null);
@@ -86,6 +88,7 @@ public class BottomNavigationBar extends LinearLayout {
                 public void onClick(View v) {
                     if (mItemClickListener != null) {
                         setItemPress(pos);
+                        mCurrentPos = pos;
                         mItemClickListener.onItemClick(pos);
                     }
                 }
@@ -105,6 +108,7 @@ public class BottomNavigationBar extends LinearLayout {
     }
 
     public void setItemList(List<NavigationEntity> list) {
+        mCurrentPos = -1;
         mItems = list;
         if (mItems == null || mItems.size() <= 0) {
             return;
@@ -137,7 +141,7 @@ public class BottomNavigationBar extends LinearLayout {
     }
 
     public void setChecked(int pos) {
-        if(pos > mItems.size()){
+        if (pos > mItems.size()) {
             throw new RuntimeException("");
         }
         if (mItemClickListener != null) {

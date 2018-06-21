@@ -1,7 +1,10 @@
 package com.bob.baseforcode;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.bob.core.ScreenInfo;
@@ -15,11 +18,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     BottomNavigationBar mNavigationView;
 
+    private List<Fragment> mFragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mNavigationView = findViewById(R.id.bottom_navigation);
+        mNavigationView = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
 
         ScreenInfo.printScreenInfo(this);
 
@@ -37,14 +42,53 @@ public class MainActivity extends AppCompatActivity {
                         R.color.navigation_title_normal, R.color.navigation_title_pressed,
                         R.drawable.settings_normal, R.drawable.settings_selected));
 
+
+        if (savedInstanceState == null) {
+            mFragments = Arrays.asList(
+                    ModuleFragment.getInstance("module 1"),
+                    ModuleFragment.getInstance("module 2"),
+                    ModuleFragment.getInstance("module 3"),
+                    ModuleFragment.getInstance("module 4")
+            );
+            Log.d(TAG, "first: " + mFragments);
+            initFragment();
+        } else {
+            mFragments = getSupportFragmentManager().getFragments();
+            Log.d(TAG, "second: " + mFragments);
+        }
+
         mNavigationView.setItemList(list);
 
-        mNavigationView.setOnItemClickListener(new BottomNavigationBar.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Log.d(TAG, "onItemClick: " + position);
-            }
-        });
+        mNavigationView.setOnItemClickListener(this::showFragment);
 
+        mNavigationView.setChecked(0);
     }
+
+    private void initFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        for (Fragment mFragment : mFragments) {
+            transaction.add(R.id.fragment_container, mFragment, mFragment.toString());
+            transaction.hide(mFragment);
+        }
+        transaction.commit();
+    }
+
+    private void showFragment(int position) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+//        Log.d(TAG, "fragment size: " + manager.getFragments().size());
+        int size = mFragments.size();
+        for (int i = 0; i < size; i++) {
+            Fragment fragment = mFragments.get(i);
+            if (i == position) {
+                transaction.show(fragment);
+            } else {
+                transaction.hide(fragment);
+            }
+        }
+        transaction.commit();
+    }
+
 }
