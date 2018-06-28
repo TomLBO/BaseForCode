@@ -40,14 +40,10 @@ public class BottomNavigationBar extends LinearLayout {
     }
 
     public BottomNavigationBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public BottomNavigationBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
 
         TypedArray ta = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.BottomNavigationBar, defStyleAttr, defStyleRes);
+                attrs, R.styleable.BottomNavigationBar, defStyleAttr, 0);
         int length = ta.length();
         for (int i = 0; i < length; i++) {
             int attr = ta.getIndex(i);

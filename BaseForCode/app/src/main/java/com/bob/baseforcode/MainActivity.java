@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.bob.core.ScreenAdaptation;
 import com.bob.core.ScreenInfo;
 import com.bob.uilibrary.navigation.bottom.BottomNavigationBar;
 import com.bob.uilibrary.navigation.bottom.NavigationEntity;
@@ -23,10 +24,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ScreenAdaptation.setCustomDensity(this, getApplication());
+        ScreenInfo.printScreenInfo(this);
+
         setContentView(R.layout.activity_main);
         mNavigationView = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
-
-        ScreenInfo.printScreenInfo(this);
 
         List<NavigationEntity> list = Arrays.asList(
                 NavigationEntity.getInstance(R.string.navigation_home,
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
+//        manager.back
+//        transaction.addToBackStack()
+
 //        Log.d(TAG, "fragment size: " + manager.getFragments().size());
         int size = mFragments.size();
         for (int i = 0; i < size; i++) {
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 transaction.hide(fragment);
             }
+//            transaction.addToBackStack(null);
         }
         transaction.commit();
     }

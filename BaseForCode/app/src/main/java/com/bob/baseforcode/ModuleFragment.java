@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,9 @@ public class ModuleFragment extends Fragment {
     private ProgressBar mProgressBar;
     private ExecutorService mThreadPool;
 
+    private static String cacheData;
+    private String mTitle;
+
     public static ModuleFragment getInstance(String moduleName) {
         ModuleFragment fragment = new ModuleFragment();
         Bundle bundle = new Bundle();
@@ -46,6 +51,10 @@ public class ModuleFragment extends Fragment {
         mTvContent = (TextView) view.findViewById(R.id.tv_content);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
+        if (!TextUtils.isEmpty(cacheData)) {
+            mTvContent.setText(cacheData);
+        }
+
         return view;
     }
 
@@ -55,9 +64,9 @@ public class ModuleFragment extends Fragment {
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            String title = arguments.getString(MODULE_NAME);
-            mToolbar.setTitle(title);
-            mTvContent.setText(title);
+            mTitle = arguments.getString(MODULE_NAME);
+            mToolbar.setTitle(mTitle);
+            mTvContent.setText(mTitle);
         }
 
         mThreadPool = Executors.newCachedThreadPool();
@@ -75,7 +84,12 @@ public class ModuleFragment extends Fragment {
         runOnMainThread(() -> mTvContent.setVisibility(View.VISIBLE));
         mProgressBar.post(() -> mProgressBar.setVisibility(View.GONE));
 
-        mTvContent.setOnClickListener(v -> mTvContent.setText(mTvContent.getText() + "2"));
+        mTvContent.setOnClickListener(v -> {
+
+            mTvContent.setText(mTvContent.getText() + "2");
+            cacheData = mTvContent.getText().toString();
+            Log.d(mTitle, "showContent: " + cacheData);
+        });
     }
 
     private void runOnMainThread(Runnable r) {
