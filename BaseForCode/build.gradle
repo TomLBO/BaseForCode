@@ -31,4 +31,5 @@ ext {
     minSdkVersion = 19
 
     supportVersion = '26.0.0'
+    multitype = '3.3.0'
 }

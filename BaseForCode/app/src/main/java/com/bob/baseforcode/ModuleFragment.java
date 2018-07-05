@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  * Created by bob
  * on 2018/6/21.
  */
-public class ModuleFragment extends Fragment {
+public class ModuleFragment extends BaseFragment {
 
     public static final String MODULE_NAME = "MODULE_NAME";
 
@@ -45,6 +45,7 @@ public class ModuleFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.module_fragment, container, false);
 
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
